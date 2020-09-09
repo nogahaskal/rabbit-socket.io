@@ -25,8 +25,3 @@ export async function connect(rabbitConnectionString: string, queueName: string,
 export async function listen(queueName: string) {
   await Rabbit.listen(queueName);
 }
-
-(async () => {
-  await connect('amqp://localhost', 'socket');
-  listen('socket');
-})();
