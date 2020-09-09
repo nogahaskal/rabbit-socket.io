@@ -1,0 +1,22 @@
+version: "3"
+services:
+  socket-service:
+    build: .
+    image: socket-service:latest
+    ports:
+      - "8080:8080"
+    environment:
+      APPLICATION_PORT: "3000"
+      CONFIGURATION_NAMESPACE: "/configuration"
+      SHARED_FOLDERS_NAMESPACE: "/shared-page"
+      FOLDER_NAMESPACE: "/folder"
+      SOCKET_EVENT_NAME: "refresh"
+      REDIS_HOST: "redis"
+      REDIS_PORT: 6379
+      GW_SECRET: "krypton@drive"
+    depends_on:
+      - redis
+  redis:
+    image: 'redis:alpine'
+    ports:
+      - '6379:6379'
