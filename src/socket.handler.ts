@@ -4,7 +4,7 @@ import * as socketIORedis from 'socket.io-redis';
 import * as jwt from 'jsonwebtoken';
 import * as http from 'http';
 
-import { Options } from './index';
+import { Options } from './options.interface';
 
 export class Socket {
   static io: socketIO.Server;
@@ -27,7 +27,7 @@ export class Socket {
   }
 
   private initalizeSocket(): void {
-    if (this.options.useRedisAdapter) this.initalizeRedisAdapter(this.options?.redisHost, this.options?.redisPort);
+    if (this.options.useRedisAdapter) this.initalizeRedisAdapter(this.options?.redisHost || 'localhost', this.options?.redisPort || 6379);
     if (this.options.secret) this.authenitcate(this.options?.secret);
     if (this.options.origin) this.allowOrigin(this.options.origin);
     this.connect();
@@ -70,7 +70,6 @@ export class Socket {
   }
 
   static emitAll(event: string, data: object | string | undefined) {
-    console.log(Socket.io.emit(event, data));
     Socket.io.emit(event, data);
   }
 }
